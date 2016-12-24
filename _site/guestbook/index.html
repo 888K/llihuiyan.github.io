@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+	<head>
+
+
+
+
+
+		<script type="text/javascript" async
+			src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="author" content="CHAI" />
+		<title>
+			
+				 
+				留言
+			
+		</title>
+
+		<link rel="shortcut icon" href="/image/favicon.ico" />
+		<link href="/feed/" rel="alternate" title="CHAI" type="application/atom+xml" />
+		<link rel="stylesheet" href="/media/css/style.css" />
+		<link rel="stylesheet" href="/media/css/highlight.css" />
+		<script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+	</head>
+
+	<body>
+		<div id="container">
+		<div id="main" role="main">
+
+		<header>
+			<h1>
+				留言
+			</h1>
+		</header>
+
+		<nav>
+			<span><a title="网站首页" class="" href="/">首页</a></span>
+			<span><a title="文章分类" class="" href="/categories/">分类</a></span>
+			<span><a title="标签索引" class="" href="/tags/">标签</a></span>
+			<span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+			<span><a title="关于站长" class="" href="/about/">关于</a></span>
+        </nav>
+
+        <article class="content">
+			<script type="text/javascript" src="../media/js/jquery-1.9.1.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../media/css/board.css" />
+
+<script type="text/javascript">
+	$(function(){
+		show();
+		function show(){
+			$.ajax({
+				type: 'post',
+				url: 'http://123.207.151.118/leftboard/show.php',
+				cache: false,
+				success: function(data){
+					$("#show_area").html(data);
+				},
+				error: function(){
+					alert(data);
+				}
+			})
+		}
+		$("#submit").click(function(){
+			var text = $("#textarea")[0].value;
+			$.ajax({
+				type: 'post',
+				url: 'http://123.207.151.118/leftboard/board.php',
+				data: { text : text },
+				cache: false,
+				success: function(data){
+					show();
+					$("#textarea").val("");
+				},
+				error: function(){
+					alert("wrong");
+				}
+			})
+		})
+	})
+</script>
+
+<div class="left_board">
+<div class="show_area" id="show_area"></div>
+<textarea class="textarea" id="textarea"></textarea>
+<button class="submit" id="submit">submit</button>
+</div>
+
+
+        </article>
+
+		</div>
+		</div>
+	</body>
+</html>

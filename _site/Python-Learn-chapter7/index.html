@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-CN" lang="zh-CN">
+	<head>
+
+
+
+
+
+		<script type="text/javascript" async
+			src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+		</script>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="author" content="CHAI" />
+		<title>
+			
+				
+				Python学习手册 笔记（第七章）
+			
+		</title>
+
+		<link rel="shortcut icon" href="/image/favicon.ico" />
+		<link href="/feed/" rel="alternate" title="CHAI" type="application/atom+xml" />
+		<link rel="stylesheet" href="/media/css/style.css" />
+		<link rel="stylesheet" href="/media/css/highlight.css" />
+		<script type="text/javascript" src="/media/js/jquery-1.7.1.min.js"></script>
+	</head>
+
+	<body>
+		<div id="container">
+		<div id="main" role="main">
+
+		<header>
+			<h1>
+				Python学习手册 笔记（第七章）
+			</h1>
+		</header>
+
+		<nav>
+			<span><a title="网站首页" class="" href="/">首页</a></span>
+			<span><a title="文章分类" class="" href="/categories/">分类</a></span>
+			<span><a title="标签索引" class="" href="/tags/">标签</a></span>
+			<span><a title="留言交流" class="" href="/guestbook/">留言</a></span>
+			<span><a title="关于站长" class="" href="/about/">关于</a></span>
+        </nav>
+
+        <article class="content">
+			<section class="meta">
+<span class="time">
+    <time datetime="2016-11-23">2016-11-23</time>
+</span>
+
+ |
+<span class="categories">
+  分类
+  
+  <a href="/categories/#Python" title="Python">Python</a>&nbsp;
+  
+</span>
+
+
+ |
+<span class="tags">
+  标签
+  
+  <a href="/tags/#Python学习手册" title="Python学习手册">Python学习手册</a>&nbsp;
+  
+</span>
+
+</section>
+<section class="post">
+<h2 id="第7章-字符串">第7章 字符串</h2>
+
+<ul>
+  <li>python和c语言不一样，没有单个字符的类型，取而代之的是字符串</li>
+</ul>
+
+<h3 id="字符串常量">字符串常量</h3>
+
+<ul>
+  <li>单引号、双引号、三引号、转义字符、raw字符串、byte字符串、unicode字符串</li>
+</ul>
+
+<h3 id="用转义序列代表特殊字节">用转义序列代表特殊字节</h3>
+
+<ul>
+  <li>原始的反斜杠字符并不真正的和字符串一起储存在内存中；它们告诉python字符串中保存的特殊字节值</li>
+  <li>‘\b’:倒退、’\xhh’:十六进制值、’\ooo’:八进制</li>
+  <li>python中，零字符串不会像c语言那样去结束一个字符串，python没有字符会结束一个字符串</li>
+  <li>python中没有作为一个合法的转义编码识别在’'后的字符，会在最终的字符串中保留反斜杠。如果希望脚本中编写明确的常量反斜杠，重复两个反斜杠或使用raw字符串</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="s">'</span><span class="err">\</span><span class="s">chai</span><span class="err">\</span><span class="s">jin</span><span class="err">\</span><span class="s">long'</span>
+<span class="n">x</span> <span class="c"># '\\chai\\jin\\long'</span></code></pre></figure>
+
+<h3 id="raw字符串抑制转义">raw字符串抑制转义</h3>
+
+<ul>
+  <li>如果字母r（大写或小写）出现在字符串的第一引号前，它会关闭转义机制</li>
+  <li>实际上，打印一个嵌入了反斜杠字符串时，python自身会使用两个反斜杠的方法</li>
+  <li>除了在windows下的文件夹路径，raw字符串也常在正则表达式中常见</li>
+</ul>
+
+<h3 id="三重引号编写多行字符串块">三重引号编写多行字符串块</h3>
+
+<ul>
+  <li>三重引号开始，紧跟任意行数的文本，结束以同样的三重引号结尾</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">mantra</span> <span class="o">=</span> <span class="s">'''Always look
+ on the bright
+ side of life.'''</span>
+<span class="n">mantra</span> <span class="c"># 'Always look\n on the bright\n side of life.</span></code></pre></figure>
+
+<ul>
+  <li>常用于嵌入多行错误信息或在源文件中编写HTML或XML代码</li>
+</ul>
+
+<h3 id="基本操作">基本操作</h3>
+
+<ul>
+  <li>python不允许在+表达式中混合数字和字符串(TypeError)</li>
+  <li>for语句在一个字符串中循环迭代；in表达式操作符对字符和子字符串进行成员关系的测试</li>
+</ul>
+
+<h3 id="索引和分片">索引和分片</h3>
+
+<ul>
+  <li>python支持在字符串汇总使用负偏移来从序列中获取元素，可以看作从结束处反向计数</li>
+  <li>python获取从下边界直到但不包括上边界的所有元素，并返回一个包含所获取的元素的新的对象。如果被省略，上、下边界的默认值对应为0和分片的对象的长度。</li>
+  <li>s[:-1]获取了除最后一个元素外的所有元素——下边界为0，上边界为-1对应的最后一项，但不包含在内</li>
+  <li>扩展分片：第三个索引，步进。分片表达式’hello’[::-1]返回一个新的字符串’olleh’，步进-1表示分片将会从右至左进行而不是通常的从左至右</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="s">'spam'</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="c"># 'pa'</span>
+<span class="s">'spam'</span><span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span> <span class="c"># 'pa'</span>
+<span class="s">'spam'</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="c"># 'maps'</span>
+<span class="s">'spam'</span><span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)]</span> <span class="c"># 'maps'</span></code></pre></figure>
+
+<ul>
+  <li>分片常常用作清理输入文件的内容。</li>
+</ul>
+
+<h3 id="字符串转换工具">字符串转换工具</h3>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">int</span><span class="p">(</span><span class="s">"42"</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="mi">42</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="s">'1.5'</span><span class="p">)</span> <span class="c"># (42, '42', 1.5)</span>
+<span class="nb">repr</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="c"># '42'</span></code></pre></figure>
+
+<ul>
+  <li>repr函数将一个对象转换为字符串形式</li>
+  <li>字符串代码转换：ord函数将字符转换为ASCII码；chr执行相反的操作</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="nb">ord</span><span class="p">(</span><span class="s">'s'</span><span class="p">)</span> <span class="c"># 115</span>
+<span class="nb">chr</span><span class="p">(</span><span class="mi">115</span><span class="p">)</span> <span class="c"># 's'</span></code></pre></figure>
+
+<h3 id="修改字符串">修改字符串</h3>
+
+<ul>
+  <li>python在运行中对不再使用的字符串对象自动进行垃圾收集</li>
+  <li>bytearray字符串可以修改，但bytearray对象不是真正的字符串，是8位整数的序列</li>
+</ul>
+
+<h3 id="字符串方法">字符串方法</h3>
+
+<ul>
+  <li>方法调用同时进行两次操作：属性读取：具有object.attribute格式的表达式可以理解为“读取object对象的属性attribute的值”；函数调用表达式：具有函数格式的表达式意味“调用函数代码，传递参数对象，返回函数返回值”。</li>
+</ul>
+
+<h3 id="字符串方法实例修改字符串">字符串方法实例：修改字符串</h3>
+
+<ul>
+  <li>replace方法的参数是原始字符串和替换原始子字符串的字符串，之后进行全局搜索并替换</li>
+  <li>find方法返回在子字符串出现处的偏移或未找到返回-1</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">s</span> <span class="o">=</span> <span class="s">'xxxxSPAMxxxxSPAMxxxx'</span>
+<span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'SPAM'</span><span class="p">,</span> <span class="s">'EGGS'</span><span class="p">)</span> <span class="c"># 'xxxxEGGSxxxxEGGSxxxx'</span>
+<span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">'SPAM'</span><span class="p">,</span> <span class="s">'EGGS'</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c"># 'xxxxEGGSxxxxSPAMxxxx'</span>
+<span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'SPAM'</span><span class="p">)</span> <span class="c"># 4</span>
+<span class="n">s</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'spam'</span><span class="p">)</span> <span class="c"># -1</span></code></pre></figure>
+
+<ul>
+  <li>内置的list函数以任意序列中的元素创建一个新的列表，join函数会将列表“合并”成一个字符串。join将列表字符串串连在一起，并用分隔符隔开，并且更快</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">s</span> <span class="o">=</span> <span class="s">'spammy'</span>
+<span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">l</span> <span class="c"># ['s', 'p', 'a', 'm', 'm', 'y']</span>
+<span class="n">a</span> <span class="o">=</span> <span class="s">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="n">a</span> <span class="c"># 'spammy'</span>
+<span class="s">'spam'</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">'eggs'</span><span class="p">,</span> <span class="s">'sausage'</span><span class="p">,</span> <span class="s">'ham'</span><span class="p">,</span> <span class="s">'toast'</span><span class="p">])</span> <span class="c"># 'eggsspamsausagespamhamspamtoast'</span></code></pre></figure>
+
+<h3 id="字符串方法实例文本解析">字符串方法实例：文本解析</h3>
+
+<ul>
+  <li>split方法，默认分隔符为空格</li>
+</ul>
+
+<h3 id="实际应用中的其他常见字符串方法">实际应用中的其他常见字符串方法</h3>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">line</span> <span class="o">=</span> <span class="s">'The knights who say Ni!</span><span class="se">\n</span><span class="s">'</span>
+<span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">()</span> <span class="c"># 'The knights who say Ni!'</span>
+<span class="n">line</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span> <span class="c"># 'THE KNIGHTS WHO SAY NI!\n'</span>
+<span class="n">line</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="c"># False</span>
+<span class="n">line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">'Ni</span><span class="se">\n</span><span class="s">'</span><span class="p">)</span> <span class="c"># True</span>
+<span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">'The'</span><span class="p">)</span> <span class="c"># True</span></code></pre></figure>
+
+<ul>
+  <li>help(s.method)来获得关于任何字符串对象s的方法的提示</li>
+</ul>
+
+<h3 id="字符串格式化表达式">字符串格式化表达式</h3>
+
+<ul>
+  <li>在%操作符的左侧放置一个需要进行格式化的字符串，字符串带有一个或多个嵌入的转换目标，都以%开头</li>
+  <li>在%操作符的右侧放置对象，这些对象会插入到左侧想让python进行格式化字符串的转换目标的位置上去</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="s">"</span><span class="si">%</span><span class="s">s -- </span><span class="si">%</span><span class="s">s -- </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="mf">3.14159</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span> <span class="c"># '42 -- 3.14159 -- [1, 2, 3]'</span></code></pre></figure>
+
+<ul>
+  <li>对象的每个类型都可以转换为字符串</li>
+</ul>
+
+<h3 id="更高级的字符串格式化表达式">更高级的字符串格式化表达式</h3>
+
+<ul>
+  <li>r：使用repr；i：整数；X：x，但打印大写；E：e，但打印大写</li>
+  <li>%[(name)][flags][width][.precision]typecode，放置一个字典的键、罗列出左对齐(-)、正负号(+)、和补0的标志位、给出数字的整体长度、小数点后位数。width和precision都可以编码为一个*，以指定它们从输入的下一项取值</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="mi">1234</span>
+<span class="n">res</span> <span class="o">=</span> <span class="s">'integers: ...</span><span class="si">%</span><span class="s">d...</span><span class="si">%-6</span><span class="s">d...</span><span class="si">%06</span><span class="s">d'</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="n">res</span> <span class="c"># 'integers: ...1234...1234  ...001234'</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">x</span> <span class="o">=</span> <span class="mf">1.23456789</span>
+<span class="n">x</span> <span class="c"># 1.23456789</span>
+<span class="s">'</span><span class="si">%</span><span class="s">e | </span><span class="si">%</span><span class="s">f | </span><span class="si">%</span><span class="s">g'</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="c"># '1.234568e+00 | 1.234568 | 1.23457'</span>
+<span class="s">'</span><span class="si">%</span><span class="s">E'</span> <span class="o">%</span> <span class="n">x</span> <span class="c"># '1.234568E+00'</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="s">'</span><span class="si">%-6.2</span><span class="s">f | </span><span class="si">%05.2</span><span class="s">f | </span><span class="si">%+06.1</span><span class="s">f'</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="c"># '1.23   | 01.23 | +001.2'</span>
+<span class="s">'</span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="n">x</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c"># ('1.23456789', '1.23456789')</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="s">'</span><span class="si">%</span><span class="s">f, </span><span class="si">%.2</span><span class="s">f, </span><span class="si">%.*</span><span class="s">f'</span> <span class="o">%</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mf">3.0</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mf">3.0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mf">3.0</span><span class="p">)</span> <span class="c"># '0.333333, 0.33, 0.3333'</span></code></pre></figure>
+
+<h3 id="基于字典的字符串格式化">基于字典的字符串格式化</h3>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="s">'</span><span class="si">%(n)</span><span class="s">d </span><span class="si">%(x)</span><span class="s">s'</span> <span class="o">%</span> <span class="p">{</span><span class="s">'n'</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s">'x'</span><span class="p">:</span><span class="s">'spam'</span><span class="p">}</span> <span class="c"># '1 spam'</span></code></pre></figure>
+
+<ul>
+  <li>格式化字符串中(n)和(x)引用右边字典里的键，并提取相应的值</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">reply</span> <span class="o">=</span> <span class="s">'''
+Greetings...
+Hello </span><span class="si">%(name)</span><span class="s">s!
+Your age squared is </span><span class="si">%(age)</span><span class="s">s
+'''</span>
+<span class="n">value</span> <span class="o">=</span> <span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'Bob'</span><span class="p">,</span> <span class="s">'age'</span><span class="p">:</span> <span class="mi">40</span><span class="p">}</span>
+<span class="k">print</span><span class="p">(</span><span class="n">reply</span> <span class="o">%</span> <span class="n">value</span><span class="p">)</span> <span class="c"># \nGreetings...\nHello Bob!\nYour age squared is 40\n</span></code></pre></figure>
+
+<ul>
+  <li>和内置函数vars配合使用，可以返回包含本函数调用时存在的变量的字典</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">food</span> <span class="o">=</span> <span class="s">'spam'</span>
+<span class="n">age</span> <span class="o">=</span> <span class="mi">40</span>
+<span class="nb">vars</span><span class="p">()</span> <span class="c"># {'food': 'spam', 'age': 40, ...many more...}</span></code></pre></figure>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="s">'</span><span class="si">%(age)</span><span class="s">d </span><span class="si">%(food)</span><span class="s">s'</span> <span class="o">%</span> <span class="nb">vars</span><span class="p">()</span><span class="s">' # '</span><span class="mi">40</span> <span class="n">spam</span><span class="s">'</span></code></pre></figure>
+
+<h3 id="字符串格式化调用方法">字符串格式化调用方法</h3>
+
+<ul>
+  <li>花括号通过位置({1})或关键字({food})指出替换目标及要插入的参数</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">template</span> <span class="o">=</span> <span class="s">'{0}, {1} and {2}'</span>
+<span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">'spam'</span><span class="p">,</span> <span class="s">'ham'</span><span class="p">,</span> <span class="s">'eggs'</span><span class="p">)</span> <span class="c"># 'spam, ham and eggs'</span>
+<span class="n">template</span> <span class="o">=</span> <span class="s">'{motto}, {pork} and {food}'</span>
+<span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">motto</span><span class="o">=</span><span class="s">'spam'</span><span class="p">,</span> <span class="n">pork</span><span class="o">=</span><span class="s">'ham'</span><span class="p">,</span> <span class="n">food</span><span class="o">=</span><span class="s">'eggs'</span><span class="p">)</span> <span class="c"># 'spam, ham and eggs'</span>
+<span class="n">template</span> <span class="o">=</span> <span class="s">'{motto}, {0} and {food}'</span>
+<span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">'ham'</span><span class="p">,</span> <span class="n">motto</span><span class="o">=</span><span class="s">'spam'</span><span class="p">,</span> <span class="n">food</span><span class="o">=</span><span class="s">'eggs'</span><span class="p">)</span> <span class="c"># 'spam, ham and eggs'</span></code></pre></figure>
+
+<ul>
+  <li>就像%表达式和其他字符串方法一样，format创建并返回一个新的字符串对象</li>
+</ul>
+
+<h3 id="添加键属性和偏移量">添加键、属性和偏移量</h3>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">sys</span>
+<span class="s">'My {1[spam]} run {0.platform}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="p">{</span><span class="s">'spam'</span><span class="p">:</span> <span class="s">'laptop'</span><span class="p">})</span> <span class="c"># 'My laptop run darwin'</span>
+<span class="s">'My {config[spam]} runs {sys.platform}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="o">=</span><span class="n">sys</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="p">{</span><span class="s">'spam'</span><span class="p">:</span> <span class="s">'laptop'</span><span class="p">})</span> <span class="c"># 'My laptop runs darwin'</span></code></pre></figure>
+
+<ul>
+  <li>和%表达式一样，指定负的偏移或分片，或者使用任意表达式，必须在格式化字符串自身之外运行表达式</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">somelist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="s">'SPAM'</span><span class="p">)</span>
+<span class="n">somelist</span> <span class="c"># ['S', 'P', 'A', 'M']</span>
+<span class="s">'first={0[0]}, third={0[2]}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">somelist</span><span class="p">)</span>
+<span class="c"># 'first=S, third=A'</span>
+<span class="s">'first={0}, last={1}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">somelist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">somelist</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="c"># 'first=S, last=M'</span>
+<span class="n">parts</span> <span class="o">=</span> <span class="n">somelist</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">somelist</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">somelist</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="s">'first={0}, last={1}, middle={2}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">parts</span><span class="p">)</span>
+<span class="c"># "first=S, last=M, middle=['P', 'A']"</span></code></pre></figure>
+
+<h3 id="添加具体格式化">添加具体格式化</h3>
+
+<ul>
+  <li>{fieldname!conversinflag:formatspec}：fieldname是指定参数的一个数字或关键字，后面跟着可选的’.name’或’[index]’成分引用；conversionflag可以是r、s，或者a分别是在该值上对repr、str或ascii内置函数的一次调用；formatspec指定了该如何表示该值，包括字段宽度、对齐方式、补零、小数点精度等细节，并且以一个可选的数据类型编码结束</li>
+  <li>[[fill]align][sign][#][0][width][.precision][typecode]，align可以是&lt;、&gt;、=或^，分别表示左对齐、右对齐、标记字符后的补充、居中对齐。</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="s">'{0:10} = {1:10}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">'spam'</span><span class="p">,</span> <span class="mf">123.4567</span><span class="p">)</span>
+<span class="c"># 'spam       =   123.4567'</span>
+<span class="s">'{0:&gt;10} = {1:&lt;10}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">'spam'</span><span class="p">,</span> <span class="mf">123.4567</span><span class="p">)</span>
+<span class="c"># '      spam = 123.4567  '</span>
+<span class="s">'{0.platform:&gt;10} = {1[item]:&lt;10}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sys</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="n">item</span><span class="o">=</span><span class="s">'laptop'</span><span class="p">))</span>
+<span class="c"># '    darwin = laptop    '</span></code></pre></figure>
+
+<h3 id="与格式化表达式比较">与%格式化表达式比较</h3>
+
+<ul>
+  <li>通常，格式化表达式会比格式化方法调用更容易编写</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="k">print</span><span class="p">(</span><span class="s">'</span><span class="si">%</span><span class="s">s=</span><span class="si">%</span><span class="s">s'</span> <span class="o">%</span> <span class="p">(</span><span class="s">'spam'</span><span class="p">,</span> <span class="mi">42</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'{0}={1}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">'spam'</span><span class="p">,</span> <span class="mi">42</span><span class="p">))</span></code></pre></figure>
+
+
+</section>
+<section align="right">
+<br/>
+<span>
+	<a  href="/ML-Concept-and-Fundamentals/" class="pageNav"  >上一篇</a>
+	&nbsp;&nbsp;&nbsp;
+	<a  href="/Python-Learn-chapter8/" class="pageNav"  >下一篇</a>
+</span>
+</section>
+
+        </article>
+
+		</div>
+		</div>
+	</body>
+</html>
